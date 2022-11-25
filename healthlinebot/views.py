@@ -44,6 +44,9 @@ person=[0,1,2,3]
 @csrf_exempt
 def callback(request):
 
+    if request.method == 'GET':
+        return HttpResponse("hello")
+
     if request.method == 'POST':
 
         signature = request.META['HTTP_X_LINE_SIGNATURE']

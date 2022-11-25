@@ -9,28 +9,15 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-import environ
+from dotenv import dotenv_values, load_dotenv
 
 
-ROOT_DIR = (
-    environ.Path(__file__) - 1
-)
-env = environ.Env()
-
-# 依據環境變數來決定是否讀取 .env
-READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
-if READ_DOT_ENV_FILE:
-    # OS environment variables take precedence over variables from .env
-    env.read_env(str(ROOT_DIR.path(".env")))
-DJANGO_SECRET_KEY='django-insecure-k4a9(8$y0j31+0liz!6gtee&m3$d-8y7%9dq@apue2*e(m6ofb'
-
-
-DEBUG = env.bool("DJANGO_DEBUG", False)
-SECRET_KEY = env('DJANGO_SECRET_KEY')
-DATABASES = {"default": env.db("DATABASE_URL")}
-EMAIL_CONFIG = env.email_url(
-    'EMAIL_URL', default='smtp://user:password@localhost:25')
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost","example.com"])
+load_dotenv()
+ENV_PATH = ".env"
+SECRET_KEY = dotenv_values(ENV_PATH)["DJANGO_SECRET_KEY"]
+DEBUG = False
+DATABASES = dotenv_values(ENV_PATH)["DATABASE_URL"]
+ALLOWED_HOSTS = ['mis.b.cerana.tech', 'localhost']
 
 from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,20 +27,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-k4a9(8$y0j31+0liz!6gtee&m3$d-8y7%9dq@apue2*e(m6ofb'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = [
-    'ba20cb71bcae.ngrok.io',
-    '127.0.0.1'
-                 ]
-
-
-LINE_CHANNEL_ACCESS_TOKEN ='09tDHaB6BkbbgAz3J/ag5Pep6H4+asC/fjZVQS7vD7vBhMnrbuv5dOV0WlxMNtMH8oVGr5FWIatAHUkapNVuhig0UVEyctIcV7YByzg0ndMndMQtahdzBSDtxlLWJfzPqr6QFTr7FqJ9YspJihgP6AdB04t89/1O/w1cDnyilFU='
-LINE_CHANNEL_SECRET ='07b2073efb59851ebc03e8bdbb61d8f0'
+LINE_CHANNEL_ACCESS_TOKEN =dotenv_values(ENV_PATH)["LINE_CHANNEL_ACCESS_TOKEN"]
+LINE_CHANNEL_SECRET = dotenv_values(ENV_PATH)["LINE_CHANNEL_SECRET"]
 
 
 # Application definition
