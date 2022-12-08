@@ -13,7 +13,7 @@ from dotenv import dotenv_values, load_dotenv
 
 
 load_dotenv()
-ENV_PATH = ".env"
+ENV_PATH = "../.env"
 SECRET_KEY = dotenv_values(ENV_PATH)["DJANGO_SECRET_KEY"]
 DEBUG = False
 DATABASES = dotenv_values(ENV_PATH)["DATABASE_URL"]

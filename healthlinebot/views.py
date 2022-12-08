@@ -10,7 +10,12 @@ from .import nn_2_1,nn_2_2,nn_2_3,nn_2_4
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials as SAC
+import openai
 
+from dotenv import dotenv_values, load_dotenv
+load_dotenv()
+ENV_PATH = "../.env"
+CHAT_GPT_TOKEN = dotenv_values(ENV_PATH)["CHAT_GPT_TOKEN"]
 
 import datetime as dt
 
@@ -26,6 +31,16 @@ def height_p(H):
     if H<3:
         H=H*100
     return H
+
+def chatGPT(text):
+    openai.api_key = CHAT_GPT_TOKEN
+    ans = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=text,
+        max_tokens=700,
+        temperature=0.8
+    )
+    return ans['choices'][0]['text']
 
 def n2_6():
     url = "https://health.tvbs.com.tw/"
@@ -136,7 +151,7 @@ def callback(request):
                         person[1]=H
                         line_bot_api.reply_message(  # 回復傳入的訊息文字
                             event.reply_token,
-                            TextSendMessage(text="收到了呦~您的身高是"+str(H)+"公尺\n"+"請告訴我您的體重(KG)，我不會告訴別人的⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄\n EX:02.45")
+                            TextSendMessage(text="收到了呦~您的身高是"+str(H)+"公分\n"+"請告訴我您的體重(KG)，我不會告訴別人的⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄\n EX:02.45")
                             )
                     elif prove[0]=="02":
                         W=prove[1]
@@ -199,15 +214,15 @@ def callback(request):
                             event.reply_token,
                             TextSendMessage(text="晚風讓泡泡有沉沉欲睡的感覺Zzz...晚安")
                             )
-                    elif event.message.text=='早安':
+                    elif event.message.text=='減肥諮詢':
                         line_bot_api.reply_message(  # 回復傳入的訊息文字
                             event.reply_token,
-                            TextSendMessage(text="早安~~泡泡(｡◕∀◕｡)")
+                            TextSendMessage(text="請輸入任何減肥問題，我將使用 text-davici-003 模型來嘗試解答您")
                             )
-                    elif event.message.text!='嗨':
+                    elif event.message.text!='營養新聞報':
                         line_bot_api.reply_message(  # 回復傳入的訊息文字
                             event.reply_token,
-                            TextSendMessage(text=profile)
+                            TextSendMessage(text=chatGPT(event.message.text))
                             )
 
             elif isinstance(event, FollowEvent):
