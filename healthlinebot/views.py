@@ -14,7 +14,7 @@ import openai
 
 from dotenv import dotenv_values, load_dotenv
 load_dotenv()
-ENV_PATH = "../.env"
+ENV_PATH = ".env"
 CHAT_GPT_TOKEN = dotenv_values(ENV_PATH)["CHAT_GPT_TOKEN"]
 
 import datetime as dt
