@@ -104,8 +104,8 @@ def n_n_2_4(User_ID,timeString):
     plt.bar(x, breakfast_calories_lst, color=['lightsteelblue'],  tick_label = week)
     plt.bar(x, lunch_calories_lst, bottom=breakfast_calories_lst, color='blue', tick_label=week)
     plt.bar(x, dinner_calories_lst, bottom=breakfast_calories_lst+lunch_calories_lst, color='mediumblue', tick_label=week)
-    plt.ylabel('大卡數', fontproperties="Microsoft JhengHei")
-    plt.title('本週攝取大卡數長條圖',fontproperties="Microsoft JhengHei")
+    plt.ylabel('大卡數')
+    plt.title('本週攝取大卡數長條圖')
     plt.axhline(y=max_calories, c="r", ls="--", lw=2)
 
     fig1.savefig("calories_bar.jpg", dpi=500)
@@ -127,7 +127,7 @@ def n_n_2_4(User_ID,timeString):
     driver.implicitly_wait(50)
     driver.get("https://img.onl/")
 
-    place=['C:/Users/User/NTUproject/mylinebot00/calories_bar.jpg']
+    place=['./calories_bar.jpg']
     driver.implicitly_wait(10)
 
     driver.find_element_by_xpath('//*[@id="file-select"]').send_keys(place)##//*[@id="anywhere-upload-input"]
