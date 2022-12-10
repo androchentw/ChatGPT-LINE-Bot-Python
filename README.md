@@ -1,8 +1,6 @@
 # 啟動方式
 ```
-docker build . -f Dockerfile -t bot
-
-docker run -d -p 8000:8000 --name bot-container bot
+docker compose up -d
 ```
 
 # .env 放置位置
