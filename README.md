@@ -12,6 +12,27 @@ C# : [isdaviddong/chatGPTLineBot](https://github.com/isdaviddong/chatGPTLineBot?
 都是看一下官方文件就可以串起來的簡單步驟
 讀者們如果有 Docker 的基礎，應該二十分鐘內就可以串好並部署了！
 
+# 懶人包
+1. 申請 API key
+[https://beta.openai.com/account/api-keys](https://beta.openai.com/account/api-keys)
+2. 設定 .env
+
+```bash
+DJANGO_SECRET_KEY=secret
+DATABASE_URL=sqlite://YOUR_PASSWORD/db.sqlite3
+EMAIL_URL=smtp://user:YOUR_PASSWORD@localhost:25
+LINE_CHANNEL_ACCESS_TOKEN=
+LINE_CHANNEL_SECRET=
+CHAT_GPT_TOKEN=
+```
+3. 部署
+    0. 申請 line 官方帳號
+    a. docker 安裝
+    b. ngrok 安裝
+    c. docker compose up -d
+
+# 以下正式教學
+
 ## 第一步：到 openAI 網站申請 `API key`
 連結在這：[https://beta.openai.com/account/api-keys](https://beta.openai.com/account/api-keys)
 
@@ -49,7 +70,7 @@ CHAT_GPT_TOKEN=
 [蛤！原來串接 Google Sheet API 那麼簡單?](https://ithelp.ithome.com.tw/articles/10234325)
 
 
-## 第三步：根據官方文件，你可以選擇使用 HTTP request 或者 python 套件
+## 第三步（可略過）：根據官方文件，你可以選擇使用 HTTP request 或者 python 套件
 
 官方文件在這：[Create completion](https://beta.openai.com/docs/api-reference/completions/create)
 
