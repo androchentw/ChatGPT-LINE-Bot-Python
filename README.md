@@ -34,7 +34,7 @@ LINE_CHANNEL_SECRET=
 CHAT_GPT_TOKEN=
 ```
 
-這邊要注意的是，你的 `.env` 應該要放置於跟 `[manage.py](http://manage.py)` 相同的路徑底下
+這邊要注意的是，你的 `.env` 應該要放置於跟 `manage.py` 相同的路徑底下
 
 這樣我在專案設定的路徑 `ENV_PATH = ".env"`才吃的到環境變數喔！
 
