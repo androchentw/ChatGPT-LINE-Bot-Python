@@ -26,10 +26,10 @@ LINE_CHANNEL_SECRET=
 CHAT_GPT_TOKEN=
 ```
 3. 部署
-    0. 申請 line 官方帳號
-    a. docker 安裝
-    b. ngrok 安裝
-    c. docker compose up -d
+    1. 申請 line 官方帳號
+    2. docker 安裝
+    3. ngrok 安裝
+    4. docker compose up -d
 
 # 以下正式教學
 
