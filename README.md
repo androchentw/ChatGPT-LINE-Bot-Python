@@ -15,7 +15,7 @@ C# : [isdaviddong/chatGPTLineBot](https://github.com/isdaviddong/chatGPTLineBot?
 # 懶人包
 1. 申請 API key
 [https://beta.openai.com/account/api-keys](https://beta.openai.com/account/api-keys)
-2. 設定 .env
+2. 設定 .env 並放在 manage.py 旁邊
 
 ```bash
 DJANGO_SECRET_KEY=secret
@@ -26,9 +26,9 @@ LINE_CHANNEL_SECRET=
 CHAT_GPT_TOKEN=
 ```
 3. 部署
-    1. 申請 line 官方帳號
-    2. docker 安裝
-    3. ngrok 安裝
+    1. 申請 line 官方帳號[這篇](https://ithelp.ithome.com.tw/users/20117701/ironman/2634)
+    2. docker 安裝[連結](https://www.docker.com/products/docker-desktop/)
+    3. ngrok 安裝[這篇](https://ithelp.ithome.com.tw/articles/10197345)
     4. docker compose up -d
 
 # 以下正式教學
