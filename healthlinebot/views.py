@@ -6,25 +6,19 @@ from django.conf import settings
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import *
 from linebot import LineBotApi, WebhookParser
-from .import nn_2_1,nn_2_2,nn_2_3,nn_2_4
+from .import nn_2_1,nn_2_2,nn_2_3
 
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials as SAC
+import datetime as dt
+
 import openai
-
 from dotenv import dotenv_values, load_dotenv
 load_dotenv()
 ENV_PATH = ".env"
 CHAT_GPT_TOKEN = dotenv_values(ENV_PATH)["CHAT_GPT_TOKEN"]
 
-import datetime as dt
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
-##'09tDHaB6BkbbgAz3J/ag5Pep6H4+asC/fjZVQS7vD7vBhMnrbuv5dOV0WlxMNtMH8oVGr5FWIatAHUkapNVuhig0UVEyctIcV7YByzg0ndMndMQtahdzBSDtxlLWJfzPqr6QFTr7FqJ9YspJihgP6AdB04t89/1O/w1cDnyilFU='
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
-##'07b2073efb59851ebc03e8bdbb61d8f0'
-import requests
-from bs4 import BeautifulSoup
 
 def height_p(H):
     H=float(H)
@@ -41,18 +35,6 @@ def chatGPT(text):
         temperature=0.8
     )
     return ans['choices'][0]['text']
-
-def n2_6():
-    url = "https://health.tvbs.com.tw/"
-    re = requests.get(url)
-    re.content.decode()
-
-    # 確認是否下載成功
-    if re.status_code == requests.codes.ok:
-        soup = BeautifulSoup(re.text, 'html.parser') # 以 BeautifulSoup 解析 HTML 程式碼
-        news = soup.find_all('div', class_='hot_art')  # 以 CSS 的 class 抓出各類頭條新聞
-        for s in news:
-            return("網址： https://health.tvbs.com.tw/" + s.a["href"])
 
 profile="泡泡糖有六種傳說中的魔法:\n依選單來實現魔法吧~\n1.飲食紀錄-記錄下您的飲食習慣\n2.健康精靈-判斷當日熱量是否有超標\n3.運動紀錄-記錄下您的運動習慣\n4.圖表繪製-將一週攝取熱量繪製成圖表，並顯示一週所捨取到的營養素表格\n5.計算BMI/BMR-客製化計算屬於您的BMI和BMR\n6.營養新聞推播-推播健康有關新聞，隨時可以輕鬆吸收新知\n快點擊下方的圖文選單跟我互動吧，泡泡~"
 person=[0,1,2,3]
@@ -108,13 +90,6 @@ def callback(request):
                             event.reply_token,
                             TextSendMessage(text="泡泡每天的運動是飛行5小時和施魔法，都很消耗我的卡路里，你們人類也會飛嗎?\n您今天運動了嗎？\n請以「＋」作為各項運動的分隔，運動時間請以（分鐘）表示\nEX:2.游泳(60)+跑步(90)")
                             )
-                    elif event.message.text=='圖表繪製':
-                        uurl=nn_2_4.n_n_2_4(User_ID,timeString)
-                        line_bot_api.reply_message(  # 回復傳入的訊息文字
-                            event.reply_token, TextSendMessage(
-                            text="泡泡把您的一週攝取的大卡數畫成長條圖了，請點擊下面網址呦:\n"+uurl+"數據只會顯示前七天的近十大卡數據喔~多加使用精靈與泡泡一起玩吧！"
-                            )
-                            )
                     elif event.message.text=='BMI/BMR':
                         perlist=nn_2_3.n_2_3(User_ID)
                         if perlist[3] < 18.5:
@@ -126,11 +101,6 @@ def callback(request):
                         line_bot_api.reply_message(  # 回復傳入的訊息文字
                             event.reply_token,
                             TextSendMessage(text="讓我施個魔法@#$%*&!!!!!BMI計算中\n您的BMI是"+str(perlist[3])+t+"\nDO~RE~MI~SO!!!!!BMR計算中\n"+"請告訴我您的性別男/女")
-                            )
-                    elif event.message.text=='營養新聞推播':
-                        line_bot_api.reply_message(  # 回復傳入的訊息文字
-                            event.reply_token,
-                            TextSendMessage(text="我們健康精靈在火星工作時，養成了每天要閱讀一篇關於健康文章的習慣，這是我們精靈長命百歲的秘密呢，以下是泡泡看過覺得不錯的新聞推薦給您囉！\n"+n2_6())
                             )
                     elif event.message.text=='女':
                         perlist=nn_2_3.n_2_3(User_ID)
@@ -219,7 +189,7 @@ def callback(request):
                             event.reply_token,
                             TextSendMessage(text="請輸入任何減肥問題，我將使用 text-davici-003 模型來嘗試解答您")
                             )
-                    elif event.message.text!='營養新聞報':
+                    elif event.message.text!='你絕對不會輸入這個文字':
                         line_bot_api.reply_message(  # 回復傳入的訊息文字
                             event.reply_token,
                             TextSendMessage(text=chatGPT(event.message.text))
@@ -234,4 +204,3 @@ def callback(request):
         return HttpResponse()
     else:
         return HttpResponseBadRequest()
-# 學你說話

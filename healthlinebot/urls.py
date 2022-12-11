@@ -20,7 +20,4 @@ from healthlinebot import views
 
 urlpatterns = [
     path('callback',views.callback)
-
-
 ]
-##,views.sayhello
