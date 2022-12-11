@@ -1,6 +1,6 @@
 # 串接 OpenAI ChatGPT 機器人教學
 
-# 前言
+## 前言
 
 今天要實作的語言是 Python 版，若希望使用 Node.js 或 C# 可以左轉其他大神的：
 
@@ -12,7 +12,8 @@ C# : [isdaviddong/chatGPTLineBot](https://github.com/isdaviddong/chatGPTLineBot?
 都是看一下官方文件就可以串起來的簡單步驟
 讀者們如果有 Docker 的基礎，應該二十分鐘內就可以串好並部署了！
 
-# 懶人包
+## 懶人包
+
 1. 申請 API key
 [https://beta.openai.com/account/api-keys](https://beta.openai.com/account/api-keys)
 2. 設定 .env 並放在 manage.py 旁邊
@@ -25,26 +26,28 @@ LINE_CHANNEL_ACCESS_TOKEN=
 LINE_CHANNEL_SECRET=
 CHAT_GPT_TOKEN=
 ```
+
 3. 部署
     1. 申請 line 官方帳號[這篇](https://ithelp.ithome.com.tw/users/20117701/ironman/2634)
     2. docker 安裝[連結](https://www.docker.com/products/docker-desktop/)
     3. ngrok 安裝[這篇](https://ithelp.ithome.com.tw/articles/10197345)
     4. docker compose up -d
 
-# 以下正式教學
+## 以下正式教學
 
-## 第一步：到 openAI 網站申請 `API key`
+### 第一步：到 openAI 網站申請 `API key`
+
 連結在這：[https://beta.openai.com/account/api-keys](https://beta.openai.com/account/api-keys)
 
 切記，這個 api key 不可以推上來 github 喔，可能會不明人士盜用！
 
 ![1](https://user-images.githubusercontent.com/96360357/206909022-2dcb4fff-5b27-411d-94bb-cb6194099c9b.png)
 
+### 第二步：使用 .env 來設定環境變數
 
-## 第二步：使用 .env 來設定環境變數
 我在 repo 中有放置 `.env.sample` ，大家可以根據自己的環境設置不一樣的變數
 
-[https://github.com/Lanznx/HealthLineBot/blob/main/.env.sample](https://github.com/Lanznx/HealthLineBot/blob/main/.env.sample) 
+[https://github.com/Lanznx/HealthLineBot/blob/main/.env.sample](https://github.com/Lanznx/HealthLineBot/blob/main/.env.sample)
 
 ```bash
 DJANGO_SECRET_KEY=secret
@@ -69,8 +72,7 @@ CHAT_GPT_TOKEN=
 
 [蛤！原來串接 Google Sheet API 那麼簡單?](https://ithelp.ithome.com.tw/articles/10234325)
 
-
-## 第三步（可略過）：根據官方文件，你可以選擇使用 HTTP request 或者 python 套件
+### 第三步（可略過）：根據官方文件，你可以選擇使用 HTTP request 或者 python 套件
 
 官方文件在這：[Create completion](https://beta.openai.com/docs/api-reference/completions/create)
 
@@ -80,12 +82,9 @@ CHAT_GPT_TOKEN=
 
 ![2](https://user-images.githubusercontent.com/96360357/206909228-121fa235-4608-4e51-bc8b-33d8ca1ce575.png)
 
-
 基本上我都寫好了，所以只要環境變數有塞進去 .env 應該就可以跑起來了
 
-
-
-## 第四步：核心程式碼解說（可略過）
+### 第四步：核心程式碼解說（可略過）
 
 [/healthlinebot/view.py 的連結](https://github.com/Lanznx/HealthLineBot/blob/main/healthlinebot/views.py)
 
@@ -107,7 +106,7 @@ CHAT_GPT_TOKEN=
 
 然後我呼叫了 `openai.Completion.create` 這個函式
 
-必填的參數只有一個，就是一定要指定 model 
+必填的參數只有一個，就是一定要指定 model
 
 而我所使用的語言模型是 `text-davinci-003` ，跟大家一般在網頁版所看到的並不一樣
 
@@ -121,7 +120,7 @@ CHAT_GPT_TOKEN=
 
 1. model: 這個就不解釋了，可以在這裡查看所有的語言模型種類
     1. [https://beta.openai.com/docs/api-reference/models/list](https://beta.openai.com/docs/api-reference/models/list)
-    
+
 2. prompt：使用者輸入的訊息，給模型的 input
 
 3. max_tokens：模型回覆的長度
@@ -136,9 +135,7 @@ CHAT_GPT_TOKEN=
 
 最後最後，只要使用者不是輸入我們指定的字，我們就可以透過呼叫剛剛定義好的 `chatGPT` 這個函式來用 text-davinci-003 模型來回覆使用者囉！
 
-
-
-## 第五步：部署
+### 第五步：部署
 
 我使用了 docker 去做打包，所以部署起來特別的方便
 
@@ -174,17 +171,16 @@ Ngrok 的教學可以參考[這篇](https://ithelp.ithome.com.tw/articles/101973
 Line Webhook URL 的路徑我是設定 `/healthlinebot/callback`
 Line Webhook URL 的路徑我是設定 `/healthlinebot/callback`
 Line Webhook URL 的路徑我是設定 `/healthlinebot/callback`
-也就是 `https://BASE_URL/healthlinebot/callback` 
+也就是 `https://BASE_URL/healthlinebot/callback`
 
 很重要，所以我要講三遍，這是一個很容易踩雷的部分
 ---
-
 
 最後輸入 `docker compose up -d` 以及 `Ngrok 8000`
 
 就可以部署囉！
 
-## 進階：圖文選單設定
+### 進階：圖文選單設定
 
 我在底下有放我當初設定這個圖文選單的 postman 設定
 
