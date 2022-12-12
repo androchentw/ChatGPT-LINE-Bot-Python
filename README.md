@@ -1,4 +1,10 @@
-# 串接 OpenAI ChatGPT 機器人教學
+# 串接 OpenAI GPT3 機器人教學
+
+## 1213 更新
+
+本文所串接的是 GPT3 的 text-davinci-003 模型
+
+並不是最近大家在網頁上所看到的 ChatGPT，如有誤導，請多見諒
 
 ## 前言
 
@@ -178,6 +184,7 @@ Line Webhook URL 的路徑我是設定 `/healthlinebot/callback`
 也就是 `https://BASE_URL/healthlinebot/callback`
 
 很重要，所以我要講三遍，這是一個很容易踩雷的部分
+
 ---
 
 最後輸入 `docker compose up -d` 以及 `Ngrok 8000`
